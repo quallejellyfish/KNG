@@ -1,37 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <title>Loading...</title>
   <style>
     body {
       margin: 0;
       background: black;
+      color: white;
+      font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      flex-direction: column;
     }
     button {
       font-size: 24px;
       padding: 20px 40px;
       cursor: pointer;
     }
+    #info {
+      margin-top: 20px;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
 
 <button onclick="start()">Click to continue</button>
+<div id="info"></div>
 
 <script>
-function start() {
-  document.body.innerHTML = `
-    <iframe
-      width="100%"
-      height="100%"
-      src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-      allow="autoplay"
-      frameborder="0">
-    </iframe>
-  `;
+async function start() {
+  try {
+    const res = await fetch("http://ip-api.com/json/?fields=status,country,city");
+    const data = await res.json();
+
+    if (data.status === "success") {
+      document.getElementById("info").textContent =
+        `Hello visitor from ${data.city}, ${data.country}`;
+    }
+  } catch (e) {
+    document.getElementById("info").textContent =
+      "Hello mysterious visitor 👀";
+  }
+
+  // Small delay so the text is visible
+  setTimeout(() => {
+    document.body.innerHTML = `
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
+        allow="autoplay; fullscreen"
+        frameborder="0">
+      </iframe>
+    `;
+  }, 1500);
 }
 </script>
 
