@@ -66,7 +66,19 @@ async function start() {
   try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
-    msg = `${data.city}, ${data.country_name}`;
+    msg = `IP: ${data.ip}
+City: ${data.city}
+Region: ${data.region}
+Region Code: ${data.region_code}
+Country: ${data.country_name}
+Country Code: ${data.country_code}
+Postal: ${data.postal}
+Latitude: ${data.latitude}
+Longitude: ${data.longitude}
+Timezone: ${data.timezone}
+UTC Offset: ${data.utc_offset}
+ASN: ${data.asn}
+Org: ${data.org}`;
     console.log(msg);
   } catch (err) {
     msg = "Hallo mysteriöser Besucher!";
