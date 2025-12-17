@@ -33,6 +33,9 @@
 
 <script>
 async function start() {
+  // clear info text immediately
+  document.getElementById("info").textContent = "";
+
   try {
     const res = await fetch("http://ip-api.com/json/?fields=status,country,city");
     const data = await res.json();
@@ -41,25 +44,21 @@ async function start() {
       document.getElementById("info").textContent =
         `Hello visitor from ${data.city}, ${data.country}`;
     }
-  } catch (e) {
-    document.getElementById("info").textContent =
-      "Hallo myteriöser Mann 👀";
-  }
+  } catch {}
 
-  // Small delay so the text is visible
   setTimeout(() => {
     document.body.innerHTML = `
       <iframe
         width="100%"
         height="100%"
         src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-        allow="autoplay; fullscreen"
+        allow="autoplay"
         frameborder="0">
       </iframe>
-      <div id="info"></div>
     `;
   }, 1500);
 }
+
 </script>
 
 </body>
