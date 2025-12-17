@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Loading...</title>
+  <title>KNG - Kein NPC Geschichte</title>
   <style>
     body {
       margin: 0;
@@ -33,32 +33,38 @@
 
 <script>
 async function start() {
-  // clear info text immediately
-  document.getElementById("info").textContent = "";
+  const info = document.getElementById("info");
 
   try {
-    const res = await fetch("http://ip-api.com/json/?fields=status,country,city");
+    const res = await fetch("http://ip-api.com/json/?fields=status,country,city,query");
     const data = await res.json();
 
     if (data.status === "success") {
-      document.getElementById("info").textContent =
-        `Hello visitor from ${data.city}, ${data.country}`;
-    }
-  } catch {}
+      const msg = `Visitor from ${data.city}, ${data.country} (IP: ${data.query})`;
 
+      // ✅ output to console (this stays even after DOM replacement)
+      console.log(msg);
+
+      // optional on-page text
+      if (info) info.textContent = msg;
+    }
+  } catch (err) {
+    console.log("Could not fetch location info", err);
+  }
+
+  // delay so console + text update happens first
   setTimeout(() => {
     document.body.innerHTML = `
       <iframe
         width="100%"
         height="100%"
         src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1"
-        allow="autoplay"
+        allow="autoplay; fullscreen"
         frameborder="0">
       </iframe>
     `;
   }, 1500);
 }
-
 </script>
 
 </body>
